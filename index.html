@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <link rel="stylesheet" id="themeColors" href="main-light.css">
+    <link rel="stylesheet" id="themeColors" href="main-dark.css">
     <link rel="stylesheet" href="custom.css">
     <script src="jquery.min.js"></script>
     <script src="main.js"></script>
@@ -15,12 +15,30 @@
         <h1>Progress Dash</h1>
         See your progress as you learn through your scores in a csv file.
     </header>
-    <div id="fileOpen">
-        <!-- TODO drag and drop file / click to open file -->
-    </div>
-    <div id="dashGUI">
-        <!-- TODO create a dashboard gui -->
-    </div>
+    <section id="fileOpen">
+        <p>
+            Drag and drop into here or click to open csv.
+        </p>
+    </section>
+    <section id="dashGUI">
+        <div id="barView">
+            <div class="bar" style="background: linear-gradient(90deg, var(--nord13) 50%, var(--nord8) 0);" id="totalBar"><span>Total</span><span class="barPercent">50%</span></div>
+            <div id="normalBarWrapper">
+                <div class="bar" style="background: linear-gradient(90deg, var(--nord12) 30%, var(--nord8) 0);" id="normalBar"><span>Topic A</span><span class="barPercent">30%</span></div>
+                <div class="bar" style="background: linear-gradient(90deg, var(--nord14) 90%, var(--nord8) 0);" id="normalBar"><span>Topic B</span><span class="barPercent">90%</span></div>
+                <div class="bar" style="background: linear-gradient(90deg, var(--nord13) 50%, var(--nord8) 0);" id="normalBar"><span>Topic C</span><span class="barPercent">50%</span></div>
+                <div class="bar" style="background: linear-gradient(90deg, var(--nord12) 30%, var(--nord8) 0);" id="normalBar"><span>Topic A</span><span class="barPercent">30%</span></div>
+                <div class="bar" style="background: linear-gradient(90deg, var(--nord14) 90%, var(--nord8) 0);" id="normalBar"><span>Topic B</span><span class="barPercent">90%</span></div>
+                <div class="bar" style="background: linear-gradient(90deg, var(--nord13) 50%, var(--nord8) 0);" id="normalBar"><span>Topic C</span><span class="barPercent">50%</span></div>
+                <div class="bar" style="background: linear-gradient(90deg, var(--nord12) 30%, var(--nord8) 0);" id="normalBar"><span>Topic A</span><span class="barPercent">30%</span></div>
+                <div class="bar" style="background: linear-gradient(90deg, var(--nord14) 90%, var(--nord8) 0);" id="normalBar"><span>Topic B</span><span class="barPercent">90%</span></div>
+                <div class="bar" style="background: linear-gradient(90deg, var(--nord13) 50%, var(--nord8) 0);" id="normalBar"><span>Topic C</span><span class="barPercent">50%</span></div>
+                <div class="bar" style="background: linear-gradient(90deg, var(--nord12) 30%, var(--nord8) 0);" id="normalBar"><span>Topic A</span><span class="barPercent">30%</span></div>
+                <div class="bar" style="background: linear-gradient(90deg, var(--nord14) 90%, var(--nord8) 0);" id="normalBar"><span>Topic B</span><span class="barPercent">90%</span></div>
+                <div class="bar" style="background: linear-gradient(90deg, var(--nord13) 50%, var(--nord8) 0);" id="normalBar"><span>Topic C</span><span class="barPercent">50%</span></div>    
+            </div>
+        </div>
+    </section>
     <footer>
         Max Friedrich |
         <a target="_blank" href='mailto:max@mfriedrich.win'>max@mfriedrich.win</a>

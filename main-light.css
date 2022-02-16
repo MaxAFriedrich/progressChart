@@ -219,6 +219,9 @@ section {
      background-color: var(--nord4);
 }
 
+#totalChartWrapper, #normalChartWrapper{
+     background-color: var(--nord4);
+}
 @media only screen and (max-width: 600px) {
      header * {
           display: block;

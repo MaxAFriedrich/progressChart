@@ -33,7 +33,7 @@
 }
 
 body {
-    overflow: hidden;
+    overflow: auto;
 }
 
 /* width */
@@ -87,6 +87,7 @@ section {
     border-radius: 0.5rem;
     color: var(--nord0);
     height: 100%;
+    float:left;
 }
 
 #totalBar {
@@ -119,4 +120,20 @@ section {
 .barPercent {
     position: absolute;
     right: 0.5rem;
+}
+
+#totalChartWrapper{
+    height:40vh;
+    width:35vw;
+    float:right;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+#normalChartWrapper{
+    margin-top: 2vh;
+    height:20vh;
+    width:35vw;
+    float:right;
+    padding: 1rem;
+    border-radius: 0.5rem;
 }

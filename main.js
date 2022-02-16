@@ -1,4 +1,5 @@
 var openedFile = false;
+let csvArray;
 window.onload = () => {
     $("#fileOpen").on("drop", ev => {
         ev.preventDefault();
@@ -21,7 +22,7 @@ window.onload = () => {
 };
 
 function render(csv) {
-    let csvArray = csv.split(/\n/);
+    csvArray = csv.split(/\n/);
     for (let i = 0; i < csvArray.length; i++) {
         csvArray[i] = csvArray[i].split(/\,/);
     }
@@ -51,8 +52,13 @@ function render(csv) {
 
     console.log(csvArray);
     console.log(totalArray);
+
+
+    // switch to dash view
     $("#fileOpen").hide();
     $("#dashGUI").show();
+
+
     // convert this to html code to display
     $("#barView").append(`<div class="bar" style="background: linear-gradient(90deg, var(--nord${pickColor(totalArray.at(-1))}) ${totalArray.at(-1)}%, var(--nord8) 0);" id="totalBar"><span>Total</span><span class="barPercent">${Math.round((totalArray.at(-1) + Number.EPSILON) * 100) / 100}%</span></div>`);
 
@@ -60,11 +66,138 @@ function render(csv) {
     for (let i = 1; i < csvArray.length; i++) {
         let percent = csvArray[i].at(-1);
         let name = csvArray[i][0];
-        outString += `<div class="bar" style="background: linear-gradient(90deg, var(--nord${pickColor(percent)}) ${percent}%, var(--nord8) 0);" id="normalBar"><span>${name}</span><span class="barPercent">${Math.round((percent + Number.EPSILON) * 100) / 100}%</span></div>`;
+        outString += `<div class="bar" onmouseover="normalChartGen(${i})" style="background: linear-gradient(90deg, var(--nord${pickColor(percent)}) ${percent}%, var(--nord8) 0);" id="normalBar"><span>${name}</span><span class="barPercent">${Math.round((percent + Number.EPSILON) * 100) / 100}%</span></div>`;
     }
+
     $("#barView").append(`<div id="normalBarWrapper">${outString}</div>`);
-    //TODO add graphs
-    //TODO switch to dash view
+
+    //add graphs
+    $("#dashGUI").append(`<div id="totalChartWrapper"><canvas id="totalLine"></canvas></div>`);
+
+
+    new Chart(
+        document.getElementById('totalLine'),
+        {
+            type: 'line',
+            data: {
+                labels: csvArray[0].slice(1,),
+                datasets: [{
+                    label: 'totalLine',
+                    data: totalArray,
+                    color: "#8FBCBB",
+                    backgroundColor: "#88C0D0",
+                    borderColor: "#88C0D0"
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                    title: {
+                        display: true,
+                        text: 'Total Over Time',
+                        color: "#81A1C1"
+                    },
+                    tooltip: {
+                        enabled: false
+                    }
+                },
+                scales: {
+                    y: {
+                        min: 0,
+                        max: 100,
+                        grid: {
+                            color: "#81A1C1"
+                        },
+                        title: {
+                            display: true,
+                            text: "Percentage Correct",
+                            color: "#81A1C1"
+                        },
+                        ticks: {
+                            color: "#81A1C1"
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: "#81A1C1"
+                        },
+                        ticks: {
+                            color: "#81A1C1"
+                        }
+                    },
+
+                }
+            }
+        }
+    );
+}
+
+function normalChartGen(index) {
+    $("#normalChartWrapper").remove();
+    $("#dashGUI").append(`<div id="normalChartWrapper"><canvas id="normalLine"></canvas></div>`);
+    new Chart(
+        document.getElementById('normalLine'),
+        {
+            type: 'line',
+            data: {
+                labels: csvArray[0].slice(1,),
+                datasets: [{
+                    label: 'totalLine',
+                    data: csvArray[index].slice(1,),
+                    color: "#8FBCBB",
+                    backgroundColor: "#88C0D0",
+                    borderColor: "#88C0D0"
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                    title: {
+                        display: true,
+                        text: `${csvArray[index][0]} Over Time`,
+                        color: "#81A1C1"
+                    },
+                    tooltip: {
+                        enabled: false
+                    }
+                },
+                scales: {
+                    y: {
+                        min: 0,
+                        max: 100,
+                        grid: {
+                            color: "#81A1C1"
+                        },
+                        title: {
+                            display: true,
+                            text: "Percentage Correct",
+                            color: "#81A1C1"
+                        },
+                        ticks: {
+                            color: "#81A1C1"
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: "#81A1C1"
+                        },
+                        ticks: {
+                            color: "#81A1C1"
+                        }
+                    },
+
+                }
+            },
+        }
+    );
 }
 
 function pickColor(percent) {

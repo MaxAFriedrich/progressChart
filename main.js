@@ -13,12 +13,35 @@ window.onload = () => {
                 render(result);
                 openedFile = true;
             };
-            reader.readAsDataURL(files[0]);
+            reader.readAsDataURL(file);
         }
     });
     $("#fileOpen").on("dragover", ev => {
         ev.preventDefault();
     });
+    $("#theme").on("click", () => {
+        $("#darkTheme").toggle();
+        $("#lightTheme").toggle();
+        if ($("#themeColors").attr("href") == "main-dark.css")
+            $("#themeColors").attr("href", "main-light.css");
+        else
+            $("#themeColors").attr("href", "main-dark.css");
+
+    });
+    $("#fileOpenClick").on("change", function () {
+        file = $('#fileOpenClick').prop('files')[0];
+        if (file.type == "text/csv" && !openedFile) {
+
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                let result = atob(event.target.result.slice(21));
+                render(result);
+                openedFile = true;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
 };
 
 function render(csv) {
@@ -49,9 +72,6 @@ function render(csv) {
     for (let i = 0; i < csvArray[0].length - 1; i++) {
         totalArray[i] = (totalArray[i] / ((csvArray.length - 1) * 100)) * 100;
     }
-
-    console.log(csvArray);
-    console.log(totalArray);
 
 
     // switch to dash view

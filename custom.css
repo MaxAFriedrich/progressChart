@@ -55,7 +55,7 @@ body {
 }
 
 
-section {
+section, #fileOpen {
     max-width: 80vw;
     margin: auto;
     margin-top: 3rem;

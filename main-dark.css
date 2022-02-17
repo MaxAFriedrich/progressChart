@@ -210,7 +210,8 @@ footer {
     margin: 0;
 }
 
-section {
+section, #fileOpen {
+    display: block;
     background-color: var(--nord1);
     padding: 1rem;
 }

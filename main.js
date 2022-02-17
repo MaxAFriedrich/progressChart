@@ -53,6 +53,7 @@ function render(csv) {
     for (let i = 0; i < csvArray[0].length - 1; i++) {
         totalArray[i] = 0;
     }
+    let finalSeries = []
     for (let i = 1; i < csvArray.length; i++) {
         if (csvArray[0].length != csvArray[i].length) {
             openedFile = false;
@@ -67,11 +68,15 @@ function render(csv) {
             }
             totalArray[j - 1] = totalArray[j - 1] + csvArray[i][j];
         }
+        finalSeries.push(csvArray[i].at(-1))
     }
 
     for (let i = 0; i < csvArray[0].length - 1; i++) {
         totalArray[i] = (totalArray[i] / ((csvArray.length - 1) * 100)) * 100;
     }
+
+    //standard deviation for total
+    console.log(standardDeviation(finalSeries,finalSeries.length))
 
 
     // switch to dash view
@@ -80,7 +85,7 @@ function render(csv) {
 
 
     // convert this to html code to display
-    $("#barView").append(`<div class="bar" style="background: linear-gradient(90deg, var(--nord${pickColor(totalArray.at(-1))}) ${totalArray.at(-1)}%, var(--nord8) 0);" id="totalBar"><span>Total</span><span class="barPercent">${Math.round((totalArray.at(-1) + Number.EPSILON) * 100) / 100}%</span></div>`);
+    $("#barView").append(`<div class="bar" style="background: linear-gradient(90deg, var(--nord${pickColor(totalArray.at(-1))}) ${totalArray.at(-1)}%, var(--nord8) 0);" id="totalBar"><span>Total</span><span class="barPercent">${Math.round((totalArray.at(-1) + Number.EPSILON) * 100) / 100}% &#8723;${Math.round((standardDeviation(finalSeries,finalSeries.length) + Number.EPSILON) * 100) / 100}</span></div>`);
 
     let outString = "";
     for (let i = 1; i < csvArray.length; i++) {
@@ -229,4 +234,34 @@ function pickColor(percent) {
         return "13";
     else
         return "14";
+}
+
+function variance(a,  n)
+{
+     
+    // Compute mean (average of elements)
+     
+    var sum = 0;
+     
+    for (var i = 0; i < n; i++){
+        sum += a[i];
+     }
+         
+    var mean = sum / n;
+ 
+    // Compute sum squared
+    // differences with mean.
+     
+    var sqDiff = 0;
+     
+    for (var i = 0; i < n; i++) {
+        sqDiff += (a[i] - mean) * (a[i] - mean);
+    }
+     
+    return sqDiff / n;
+}
+ 
+function standardDeviation(arr , n)
+{
+    return Math.sqrt(variance(arr, n));
 }
